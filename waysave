@@ -113,3 +113,538 @@
         <option value="25-34">25–34</option>
         <option value="35+">35+</option>
       </select>
+      <label for="borough">Your Borough</label>
+      <select id="borough">
+        <option value="Brooklyn">Brooklyn</option>
+        <option value="Bronx">Bronx</option>
+        <option value="Manhattan">Manhattan</option>
+        <option value="Queens">Queens</option>
+        <option value="Staten Island">Staten Island</option>
+      </select>
+
+      <label>Your Interests</label>
+      <div class="multi-select" id="interests">
+        <input type="checkbox" id="parks" /><label for="parks">Parks</label>
+        <input type="checkbox" id="basketball" /><label for="basketball">Basketball</label>
+        <input type="checkbox" id="rec" /><label for="rec">Rec Centers</label>
+        <input type="checkbox" id="pools" /><label for="pools">Pools</label>
+        <input type="checkbox" id="amusement" /><label for="amusement">Amusement Parks</label>
+        <input type="checkbox" id="restaurants" /><label for="restaurants">Restaurants</label>
+        <input type="checkbox" id="fastfood" /><label for="fastfood">Fast Food</label>
+        <input type="checkbox" id="museums" /><label for="museums">Museums</label>
+        <input type="checkbox" id="gym" /><label for="gym">Gyms</label>
+        <input type="checkbox" id="tattoo" /><label for="tattoo">Tattoo Shops</label>
+        <input type="checkbox" id="malls" /><label for="malls">Malls</label>
+        <input type="checkbox" id="clothing" /><label for="clothing">Clothing Stores</label>
+        <input type="checkbox" id="shoes" /><label for="shoes">Shoe Stores</label>
+        <input type="checkbox" id="books" /><label for="books">Bookstores</label>
+        <input type="checkbox" id="arcades" /><label for="arcades">Arcades</label>
+        <input type="checkbox" id="skating" /><label for="skating">Skating Rinks</label>
+        <input type="checkbox" id="bikes" /><label for="bikes">Bike Rentals</label>
+        <input type="checkbox" id="coffee" /><label for="coffee">Coffee Shops</label>
+        <input type="checkbox" id="music" /><label for="music">Live Music</label>
+        <input type="checkbox" id="beaches" /><label for="beaches">Beaches</label>
+        <input type="checkbox" id="thrift" /><label for="thrift">Thrift Shops</label>
+        <input type="checkbox" id="flea" /><label for="flea">Flea Markets</label>
+        <input type="checkbox" id="karaoke" /><label for="karaoke">Karaoke Bars</label>
+        <input type="checkbox" id="escape" /><label for="escape">Escape Rooms</label>
+        <input type="checkbox" id="rooftop" /><label for="rooftop">Rooftop Lounges</label>
+      </div>
+
+      <button type="submit" style="padding: 12px 20px; background: #ff3c38; color: #fff; border: none; border-radius: 10px; font-size: 16px;">Find Activities</button>
+    </form>
+  </div>
+
+  <script>
+    function showSurvey() {
+      document.getElementById('splashScreen').style.display = 'none';
+      document.getElementById('surveyPage').style.display = 'block';
+    }
+
+    document.getElementById('userSurvey').addEventListener('submit', function (e) {
+      e.preventDefault();
+      document.getElementById('surveyPage').style.display = 'none';
+      document.getElementById('mainApp').style.display = 'block';
+    });
+  </script>
+
+  <div id="mainApp" style="display: none;">
+    <!-- Activity Discovery Page Begins -->
+    <div style="padding: 20px;">
+      <h2 style="color: #333;">Discover Places Around NYC</h2>
+      <div style="margin-top: 15px;">
+        <button class="filter-btn" onclick="filterActivities('all')">All</button>
+        <button class="filter-btn" onclick="filterActivities('parks')">Parks</button>
+        <button class="filter-btn" onclick="filterActivities('restaurants')">Restaurants</button>
+        <button class="filter-btn" onclick="filterActivities('museums')">Museums</button>
+        <button class="filter-btn" onclick="filterActivities('arcades')">Arcades</button>
+        <button class="filter-btn" onclick="filterActivities('beaches')">Beaches</button>
+        <button class="filter-btn" onclick="filterActivities('thrift')">Thrift</button>
+        <button class="filter-btn" onclick="filterActivities('karaoke')">Karaoke</button>
+        <button class="filter-btn" onclick="filterActivities('escape')">Escape</button>
+      </div>
+
+      <div id="activityGrid" class="grid-container">
+        <!-- Activity Card 1 -->
+        <div class="activity-card" data-category="parks" onclick="expandCard(this)">
+          <img src="https://source.unsplash.com/400x300/?park,nyc" alt="Prospect Park">
+          <h3>Prospect Park</h3>
+          <div class="activity-details">
+            <p><strong>Address:</strong> 95 Prospect Park West, Brooklyn, NY</p>
+            <p>A massive green space perfect for walking, biking, and relaxing in the heart of Brooklyn.</p>
+            <a href="https://maps.apple.com/?address=95+Prospect+Park+W,Brooklyn,NY" target="_blank">Get Directions</a>
+            <div class="comments">
+              <strong>User Comments:</strong>
+              <p>"Best chill spot on weekends!" – @bkparkfan</p>
+              <p>"Always clean and full of life." – @lilnature</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Activity Card 2 -->
+        <div class="activity-card" data-category="restaurants" onclick="expandCard(this)">
+          <img src="https://source.unsplash.com/400x300/?restaurant,nyc" alt="Joe’s Pizza">
+          <h3>Joe’s Pizza</h3>
+          <div class="activity-details">
+            <p><strong>Address:</strong> 7 Carmine St, New York, NY</p>
+            <p>Iconic NYC pizza spot serving crispy thin slices since 1975.</p>
+            <a href="https://maps.apple.com/?address=7+Carmine+St,New+York,NY" target="_blank">Get Directions</a>
+            <div class="comments">
+              <strong>User Comments:</strong>
+              <p>"Slaps every single time 🔥" – @pizzagod</p>
+              <p>"Lines are long but worth it." – @nycfoodie</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Activity Card 3 -->
+        <div class="activity-card" data-category="museums" onclick="expandCard(this)">
+          <img src="https://source.unsplash.com/400x300/?museum,newyork" alt="MoMA">
+          <h3>MoMA</h3>
+          <div class="activity-details">
+            <p><strong>Address:</strong> 11 W 53rd St, New York, NY</p>
+            <p>The Museum of Modern Art houses one of the most influential collections of modern art in the world.</p>
+            <a href="https://maps.apple.com/?address=11+W+53rd+St,New+York,NY" target="_blank">Get Directions</a>
+            <div class="comments">
+              <strong>User Comments:</strong>
+              <p>"Great rainy day spot." – @artlover</p>
+              <p>"So much inspiration here!" – @creative_mind</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Activity Card 4 -->
+        <div class="activity-card" data-category="arcades" onclick="expandCard(this)">
+          <img src="https://source.unsplash.com/400x300/?arcade,brooklyn" alt="Barcade">
+          <h3>Barcade</h3>
+          <div class="activity-details">
+            <p><strong>Address:</strong> 388 Union Ave, Brooklyn, NY</p>
+            <p>Retro arcade games plus craft beer and snacks. 21+ only.</p>
+            <a href="https://maps.apple.com/?address=388+Union+Ave,Brooklyn,NY" target="_blank">Get Directions</a>
+            <div class="comments">
+              <strong>User Comments:</strong>
+              <p>"Pure nostalgia." – @coinmaster</p>
+              <p>"Perfect for date night!" – @brooklynbae</p>
+            </div>
+          </div>
+        </div>
+        <!-- Activity Card 5 -->
+        <div class="activity-card" data-category="beaches" onclick="expandCard(this)">
+          <img src="https://source.unsplash.com/400x300/?beach,newyork" alt="Coney Island Beach">
+          <h3>Coney Island Beach</h3>
+          <div class="activity-details">
+            <p><strong>Address:</strong> Coney Island, Brooklyn, NY</p>
+            <p>Classic NYC beach with boardwalk, rides, and food stalls.</p>
+            <a href="https://maps.apple.com/?address=Coney+Island,Brooklyn,NY" target="_blank">Get Directions</a>
+            <div class="comments">
+              <strong>User Comments:</strong>
+              <p>"Best summer vibes." – @sunlover</p>
+              <p>"Perfect for family days out." – @nycfamily</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Activity Card 6 -->
+        <div class="activity-card" data-category="thrift" onclick="expandCard(this)">
+          <img src="https://source.unsplash.com/400x300/?thrift,clothes" alt="L Train Vintage">
+          <h3>L Train Vintage</h3>
+          <div class="activity-details">
+            <p><strong>Address:</strong> 229 Graham Ave, Brooklyn, NY</p>
+            <p>Popular thrift shop with curated vintage clothes and accessories.</p>
+            <a href="https://maps.apple.com/?address=229+Graham+Ave,Brooklyn,NY" target="_blank">Get Directions</a>
+            <div class="comments">
+              <strong>User Comments:</strong>
+              <p>"Found so many gems here!" – @vintagequeen</p>
+              <p>"Great prices and friendly staff." – @thriftyhunter</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Savie AI Assistant -->
+    <div id="savieAssistant" title="Chat with Savie!" onclick="toggleSavieChat()">
+      👾
+    </div>
+
+    <div id="savieChat" style="display:none;">
+      <div id="chatHeader">
+        <h3>Savie</h3>
+        <button onclick="toggleSavieChat()">✕</button>
+      </div>
+      <div id="chatMessages"></div>
+      <input type="text" id="chatInput" placeholder="Ask me something..." onkeydown="if(event.key==='Enter'){sendMessage();}" />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+
+    <style>
+      .grid-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+        gap: 15px;
+        margin-top: 20px;
+      }
+
+      .activity-card {
+        background: #fff;
+        border-radius: 15px;
+        color: #333;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        cursor: pointer;
+        overflow: hidden;
+        position: relative;
+        transition: max-height 0.5s ease;
+        max-height: 300px;
+      }
+
+      .activity-card img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+      }
+
+      .activity-card h3 {
+        padding: 10px;
+        margin: 0;
+      }
+
+      .activity-details {
+        padding: 10px;
+        display: none;
+        font-size: 14px;
+        line-height: 1.3;
+      }
+
+      .activity-card.expanded {
+        max-height: 800px;
+      }
+
+      .activity-card.expanded .activity-details {
+        display: block;
+      }
+
+      #savieAssistant {
+        position: fixed;
+        bottom: 25px;
+        right: 25px;
+        width: 70px;
+        height: 70px;
+        background: #2DC6FF;
+        border-radius: 50%;
+        color: white;
+        font-size: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        cursor: pointer;
+        user-select: none;
+        z-index: 10000;
+        transition: transform 0.3s ease;
+      }
+
+      #savieAssistant:hover {
+        transform: scale(1.1);
+      }
+
+      #savieChat {
+        position: fixed;
+        bottom: 110px;
+        right: 25px;
+        width: 320px;
+        max-height: 400px;
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 4px 25px rgba(0,0,0,0.3);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        font-family: Arial, sans-serif;
+        z-index: 10001;
+      }
+
+      #chatHeader {
+        background: #2DC6FF;
+        color: white;
+        padding: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      #chatMessages {
+        flex-grow: 1;
+        padding: 10px;
+        overflow-y: auto;
+        font-size: 14px;
+      }
+
+      #chatInput {
+        border: none;
+        border-top: 1px solid #ddd;
+        padding: 10px;
+        font-size: 14px;
+        width: calc(100% - 80px);
+      }
+
+      #savieChat button {
+        background: #2DC6FF;
+        border: none;
+        color: white;
+        padding: 10px 15px;
+        cursor: pointer;
+        font-size: 14px;
+      }
+    </style>
+
+    <script>
+      function expandCard(card) {
+        card.classList.toggle('expanded');
+      }
+
+      function toggleSavieChat() {
+        const chat = document.getElementById('savieChat');
+        chat.style.display = chat.style.display === 'block' ? 'none' : 'block';
+      }
+
+      function sendMessage() {
+        const input = document.getElementById('chatInput');
+        const msg = input.value.trim();
+        if (!msg) return;
+        const chatMessages = document.getElementById('chatMessages');
+
+        // Add user message
+        const userMsg = document.createElement('div');
+        userMsg.style.textAlign = 'right';
+        userMsg.style.marginBottom = '10px';
+        userMsg.textContent = msg;
+        chatMessages.appendChild(userMsg);
+
+        input.value = '';
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+
+        // Fake AI reply (placeholder)
+        setTimeout(() => {
+          const botMsg = document.createElement('div');
+          botMsg.style.textAlign = 'left';
+          botMsg.style.marginBottom = '10px';
+          botMsg.textContent = "Savie says: Thanks for your question! I'm still learning, but I'll get better.";
+          chatMessages.appendChild(botMsg);
+          chatMessages.scrollTop = chatMessages.scrollHeight;
+        }, 1000);
+      }
+    </script>
+  </div>
+</body>
+</html>
+  <style>
+    /* Banner Ad Styling */
+    .banner-ad {
+      background-color: #ffc400;
+      color: #000;
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-weight: bold;
+      text-align: center;
+      margin: 20px 0;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+
+    /* Sponsored Card Styling */
+    .activity-card.sponsored {
+      border: 3px solid #ffc400;
+      position: relative;
+    }
+
+    .activity-card.sponsored::before {
+      content: "Sponsored";
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background-color: #ffc400;
+      color: #000;
+      padding: 4px 8px;
+      font-weight: 700;
+      border-radius: 8px;
+      font-size: 12px;
+      z-index: 10;
+    }
+
+    /* Live Events Section */
+    #liveEvents {
+      background: #fefefe;
+      border-radius: 15px;
+      padding: 15px;
+      margin: 30px 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    #liveEvents h2 {
+      margin-bottom: 12px;
+      color: #333;
+    }
+
+    .event-card {
+      background: #fff3c4;
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 15px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .event-card:hover {
+      background-color: #fff7a5;
+    }
+
+    .event-card h3 {
+      margin: 0 0 8px 0;
+      font-size: 18px;
+    }
+
+    .event-card p {
+      margin: 0;
+      font-size: 14px;
+      color: #555;
+    }
+  </style>
+
+  <div id="liveEvents">
+    <h2>Live Events Happening Now</h2>
+    <div class="event-card" onclick="window.open('https://maps.apple.com/?q=Summer+Street+Festival+Brooklyn', '_blank')">
+      <h3>Summer Street Festival</h3>
+      <p>Brooklyn Waterfront — Food, music, and vendors. July 30 - Aug 2</p>
+    </div>
+    <div class="event-card" onclick="window.open('https://maps.apple.com/?q=Queens+Jazz+Night', '_blank')">
+      <h3>Queens Jazz Night</h3>
+      <p>Flushing Meadows Park — Live jazz concerts every Friday evening.</p>
+    </div>
+    <div class="event-card" onclick="window.open('https://maps.apple.com/?q=Manhattan+Art+Walk', '_blank')">
+      <h3>Manhattan Art Walk</h3>
+      <p>Downtown Manhattan — Gallery openings and street art tours.</p>
+    </div>
+  </div>
+
+  <script>
+    // Add Sponsored Card Example
+    const activityGrid = document.getElementById('activityGrid');
+
+    // Sponsored card HTML
+    const sponsoredCardHTML = `
+      <div class="activity-card sponsored" data-category="amusement" onclick="expandCard(this)">
+        <img src="https://source.unsplash.com/400x300/?amusement,nyc" alt="BounceZone Trampoline Park">
+        <h3>BounceZone Trampoline Park</h3>
+        <div class="activity-details">
+          <p><strong>Address:</strong> 123 Jump St, Queens, NY</p>
+          <p>Fun trampoline park with dodgeball and foam pits. Great for groups!</p>
+          <a href="https://maps.apple.com/?address=123+Jump+St,Queens,NY" target="_blank">Get Directions</a>
+          <div class="comments">
+            <strong>User Comments:</strong>
+            <p>"So much fun for kids and adults!" – @jumpfan</p>
+            <p>"Perfect for birthday parties." – @queenstramp</p>
+          </div>
+        </div>
+      </div>
+    `;
+
+    // Insert sponsored card at start of grid
+    activityGrid.insertAdjacentHTML('afterbegin', sponsoredCardHTML);
+
+    // Banner ad insertion
+    const bannerAdHTML = `<div class="banner-ad">🚨 Sponsored: Check out BounceZone Trampoline Park in Queens!</div>`;
+    activityGrid.insertAdjacentHTML('beforebegin', bannerAdHTML);
+
+    // Filter function for activity cards
+    function filterActivities(category) {
+      const cards = document.querySelectorAll('.activity-card');
+      cards.forEach(card => {
+        if (category === 'all' || card.dataset.category === category) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+  </script>
+  <style>
+    /* Final layout spacing and responsiveness */
+    body, html {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      scroll-behavior: smooth;
+    }
+
+    button.filter-btn {
+      background: #2DC6FF;
+      border: none;
+      color: white;
+      padding: 10px 15px;
+      margin: 5px 5px 5px 0;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background-color 0.3s ease;
+    }
+
+    button.filter-btn:hover {
+      background-color: #27a2d9;
+    }
+  </style>
+
+  <!-- iOS Web App Meta Tags for Bookmark/Icon -->
+  <link rel="apple-touch-icon" href="waysave-logo.png" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="WaySave" />
+
+  <!-- Explanation Comments -->
+  <!--
+    WaySave-2.0 App Prototype
+    -------------------------
+    This is a fully self-contained HTML app prototype for discovering NYC activities.
+    It includes:
+      - Splash screen with logo and tap-to-start
+      - User survey collecting name, age group, borough, and interests
+      - Activity discovery with category filtering and expandable cards
+      - Sponsored cards and banner ads clearly marked
+      - Live Events section highlighting current NYC happenings
+      - Savie AI assistant bubble with chat UI and placeholder AI responses
+      - Directions link using Apple Maps URLs
+      - Responsive and mobile-friendly layout
+      - iOS web app icon and metadata for home screen bookmarking
+
+    To run:
+      1. Save this entire HTML code into a file named 'index.html'.
+      2. Open the file locally in any modern browser or deploy to GitHub Pages.
+      3. Tap the splash screen to start.
+      4. Fill out the survey and hit 'Find Activities'.
+      5. Explore activities, filter categories, and chat with Savie.
+
+    This app is a front-end-only prototype with static data and no backend.
+    Future improvements could include real AI integration and live data feeds.
+  -->
+
+</body>
+</html>
