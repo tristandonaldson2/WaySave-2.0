@@ -2,153 +2,114 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>WaySave</title>
-  <link rel="apple-touch-icon" href="logo.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WaySave-2.0 App</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
-    body, html {
+    body {
       margin: 0;
-      padding: 0;
-      font-family: 'Fredoka One', cursive;
-      background: #fefefe;
-      color: #333;
+      font-family: 'Arial Rounded MT Bold', sans-serif;
+      background-color: #ff3c38;
+      color: #fff;
+      overflow-x: hidden;
     }
-    /* Splash Screen */
-    #splash {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: #FF4E42;
-      color: white;
+
+    #splashScreen {
       display: flex;
-      flex-direction: column;
-      align-items: center;
       justify-content: center;
-      z-index: 9999;
-      transition: opacity 1s ease-out;
+      align-items: center;
+      height: 100vh;
+      background-color: #ff3c38;
+      flex-direction: column;
+      text-align: center;
     }
-    #splash img {
-      width: 120px;
+
+    #splashScreen img {
+      width: 140px;
+      height: 140px;
+      border-radius: 30px;
       margin-bottom: 20px;
     }
-    #splash h1 {
-      font-size: 3rem;
-      margin: 0;
+
+    #splashScreen h1 {
+      font-size: 38px;
+      margin-bottom: 10px;
     }
-    #mainApp {
+
+    #splashScreen p {
+      font-size: 16px;
+      opacity: 0.8;
+    }
+
+    #surveyPage {
       display: none;
-      padding: 1rem;
+      padding: 20px;
+      background-color: #fff;
+      color: #333;
+      min-height: 100vh;
     }
-    /* Survey */
-    #surveyContainer {
-      max-width: 600px;
-      margin: 0 auto;
-      background: #fff;
-      padding: 1rem;
-      border-radius: 12px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+
+    h2 {
+      font-size: 24px;
+      margin-bottom: 15px;
     }
-    input, select {
+
+    label {
+      display: block;
+      margin: 10px 0 5px;
+    }
+
+    input[type="text"], select {
       width: 100%;
-      padding: 0.5rem;
-      margin-bottom: 1rem;
+      padding: 10px;
+      border-radius: 10px;
       border: 1px solid #ccc;
-      border-radius: 8px;
-      font-family: inherit;
+      margin-bottom: 15px;
+      font-size: 16px;
     }
-    .button {
-      background: #FF4E42;
-      color: white;
-      padding: 0.75rem 1.5rem;
-      border: none;
+
+    .multi-select {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .multi-select label {
+      background: #eee;
+      color: #333;
+      padding: 6px 12px;
       border-radius: 12px;
+      font-size: 14px;
       cursor: pointer;
-      font-size: 1rem;
     }
-    .button:hover {
-      background: #e34036;
+
+    .multi-select input[type="checkbox"] {
+      display: none;
+    }
+
+    .multi-select input[type="checkbox"]:checked + label {
+      background-color: #ff3c38;
+      color: white;
     }
   </style>
 </head>
 <body>
-  <!-- Splash Screen -->
-  <div id="splash">
-    <img src="logo.png" alt="WaySave Logo">
+  <div id="splashScreen" onclick="showSurvey()">
+    <img src="waysave-logo.png" alt="WaySave Logo" />
     <h1>WaySave</h1>
+    <p>Tap to begin your NYC adventure</p>
   </div>
 
-  <!-- Main App -->
-  <div id="mainApp">
-    <!-- Survey Container -->
-    <div id="surveyContainer">
-      <h2>Tell us about yourself</h2>
-      <input type="text" id="name" placeholder="Your Name">
-      <select id="ageGroup">
-        <option value="">Select Age Group</option>
+  <div id="surveyPage">
+    <h2>Tell us about you</h2>
+    <form id="userSurvey">
+      <label for="name">Name</label>
+      <input type="text" id="name" required />
+
+      <label for="age">Age Group</label>
+      <select id="age">
         <option value="13-17">13–17</option>
         <option value="18-24">18–24</option>
         <option value="25-34">25–34</option>
         <option value="35+">35+</option>
       </select>
-      <select id="borough">
-        <option value="">Select Borough</option>
-        <option value="Brooklyn">Brooklyn</option>
-        <option value="Bronx">Bronx</option>
-        <option value="Manhattan">Manhattan</option>
-        <option value="Queens">Queens</option>
-        <option value="Staten Island">Staten Island</option>
-      </select>
-      <label>What are you into?</label>
-      <div id="interests">
-        <label><input type="checkbox" value="Basketball Courts"> Basketball Courts</label><br>
-        <label><input type="checkbox" value="Restaurants"> Restaurants</label><br>
-        <label><input type="checkbox" value="Arcades"> Arcades</label><br>
-        <label><input type="checkbox" value="Thrift Shops"> Thrift Shops</label><br>
-        <label><input type="checkbox" value="Rooftop Lounges"> Rooftop Lounges</label><br>
-        <!-- More can be added -->
-      </div>
-      <button class="button" onclick="submitSurvey()">Discover Activities</button>
-    </div>
-
-    <!-- Content placeholder: Activities, Live Events, Savie, etc. -->
-    <div id="content" style="margin-top: 2rem;"></div>
-  </div>
-
-  <script>
-    window.onload = () => {
-      setTimeout(() => {
-        document.getElementById('splash').style.opacity = 0;
-        setTimeout(() => {
-          document.getElementById('splash').style.display = 'none';
-          document.getElementById('mainApp').style.display = 'block';
-        }, 1000);
-      }, 2200);
-    };
-
-    function submitSurvey() {
-      const name = document.getElementById('name').value;
-      const age = document.getElementById('ageGroup').value;
-      const borough = document.getElementById('borough').value;
-      const checked = document.querySelectorAll('#interests input:checked');
-      const interests = Array.from(checked).map(cb => cb.value);
-
-      document.getElementById('surveyContainer').style.display = 'none';
-      loadActivities(name, borough, interests);
-    }
-
-    function loadActivities(name, borough, interests) {
-      const content = document.getElementById('content');
-      const welcome = document.createElement('h2');
-      welcome.innerText = `Hi ${name}, here’s what’s happening in ${borough}!`;
-      content.appendChild(welcome);
-
-      const section = document.createElement('div');
-      section.innerHTML = `<p>(Activities for: ${interests.join(', ')})</p>`;
-      content.appendChild(section);
-
-      // Placeholder for upcoming sections (to be filled in next update)
-    }
-  </script>
-</body>
-</html>
