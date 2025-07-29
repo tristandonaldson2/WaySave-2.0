@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>WaySave</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet" />
+<style>
+/* ==== Root Colors and Fonts ==== */
+:root {
+--primary-color: #2DC6FF;
+--accent-color: #FFC400;
+--bg-color: #FF4E42;
+--text-color: #1d1d1d;
+--light: #fff;
+--card-bg: #fff;
+--card-shadow: rgba(0,0,0,0.12);
+--sponsor-bg: #FFC400;
+--sponsor-text: #000;
+--overlay-bg: rgba(0,0,0,0.7);
+}
+
+/* ==== Reset and base ==== */
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+font-family: 'Fredoka One', cursive, sans-serif;
+}
+
+body, html {
+height: 100%;
+background: var(--bg-color);
+color: var(--text-color);
+padding: 1rem 1.5rem 3rem;
+overflow-x: hidden;
+scroll-behavior: smooth;
+}
+
+/* ==== Splash screen ==== */
+#splash {
+position: fixed;
+top: 0; left: 0; right: 0; bottom: 0;
+background: var(--bg-color);
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+z-index: 9999;
+color: var(--light);
+user-select: none;
+}
+#splash img {
+width: 120px;
+height: 120px;
+margin-bottom: 1rem;
+filter: drop-shadow(0 0 5px #fff);
+}
+#splash h1 {
+font-size: 3.5rem;
+text-shadow: 0 0 15px #fff;
+letter-spacing: 0.1em;
+}
+#splash p {
+margin-top: 0.7rem;
+font-size: 1.3rem;
+font-weight: 700;
+font-family: 'Fredoka One', cursive;
+}
+#splash.fadeout {
+animation: fadeOutSplash 1s forwards;
+}
+@keyframes fadeOutSplash {
+to {opacity: 0; visibility: hidden;}
+}
+
+/* ==== Header ==== */
+header {
+text-align: center;
+margin-bottom: 1.5rem;
+}
+header h1 {
+font-size: 2.5rem;
+color: var(--light);
+letter-spacing: 0.05em;
+}
+
+/* ==== Banner Ad ==== */
+.banner-ad {
+background: var(--accent-color);
+padding: 0.7rem 1rem;
+border-radius: 12px;
+text-align: center;
+font-weight: bold;
+color: var(--sponsor-text);
+margin-bottom: 1.5rem;
+box-shadow: 0 2px 8px var(--card-shadow);
+user-select: none;
+}
+
+/* ==== Survey container ==== */
+#survey-container {
+background: var(--light);
+border-radius: 15px;
+padding: 1.2rem 1.5rem;
+box-shadow: 0 4px 12px var(--card-shadow);
+max-width: 480px;
+margin: 0 auto 2rem;
+}
+#survey-container h2 {
+color: var(--bg-color);
+font-size: 2rem;
+margin-bottom: 1rem;
+text-align: center;
+}
+.survey-group {
+margin-bottom: 1.25rem;
+}
+.survey-group label {
+display: block;
+font-size: 1.1rem;
+margin-bottom: 0.4rem;
+color: var(--text-color);
+}
+select, input[type="text"] {
+width: 100%;
+padding: 0.7rem 1rem;
+font-size: 1rem;
+border-radius: 10px;
+border: 2px solid var(--bg-color);
+font-family: 'Fredoka One', cursive;
+outline-offset: 2px;
+outline-color: var(--primary-color);
+}
+.checkboxes {
+display: flex;
+flex-wrap: wrap;
+gap: 0.5rem;
+}
+.checkboxes label {
+background: var(--bg-color);
+color: var(--light);
+font-weight: 700;
+padding: 0.6rem 1rem;
+border-radius: 8px;
+cursor: pointer;
+user-select: none;
+transition: background 0.3s ease;
+font-size: 0.9rem;
+flex: 1 1 40%;
+max-width: 45%;
+text-align: center;
+}
+.checkboxes input[type="checkbox"] {
+margin-right: 0.4rem;
+transform: scale(1.2);
+vertical-align: middle;
+cursor: pointer;
+}
+.checkboxes label:hover {
+background: var(--primary-color);
+color: var(--light);
+}
+#start-btn {
+background: var(--primary-color);
+border: none;
+padding: 0.9rem;
+font-size: 1.2rem;
+font-weight: 700;
+color: var(--light);
+border-radius: 12px;
+width: 100%;
+cursor: pointer;
+box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+transition: background 0.3s ease;
+}
+#start-btn:hover:not(:disabled) {
+background: #00baff;
+}
+#start-btn:disabled {
+background: #aacbdc;
+cursor: not-allowed;
+}
+
+/* ==== Main app container ==== */
+#app {
+max-width: 960px;
+margin: 0 auto;
+display: none;
+}
+
+/* ==== Filters ==== */
+#filters {
+display: flex;
+flex-wrap: wrap;
+gap: 1rem;
+justify-content: center;
+margin-bottom: 1.5rem;
+}
+#filters select {
+flex: 1 1 180px;
+border-radius: 12px;
+padding: 0.7rem 1rem;
+font-size: 1rem;
+border: 2px solid var(--bg-color);
+outline-offset: 2px;
+outline-color: var(--primary-color);
+}
+
+/* ==== Activities grid ==== */
+#activities-container {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+gap: 1.5rem;
+}
+
+/* ==== Activity cards ==== */
+.card {
+background: var(--card-bg);
+border-radius: 18px;
+box-shadow: 0 6px 16px var(--card-shadow);
+cursor: pointer;
+overflow: hidden;
+position: relative;
+transition: transform 0.3s ease;
+display: flex;
+flex-direction: column;
+}
+.card:hover {
+transform: translateY(-8px);
+box-shadow: 0 10px 24px var(--card-shadow);
+}
+.card img {
+width: 100%;
+height: 140px;
+object-fit: cover;
+border-top-left-radius: 18px;
+border-top-right-radius: 18px;
+}
+.card .card-name {
+font-size: 1.3rem;
+font-weight: 700;
+color: var(--bg-color);
+padding: 0.8rem 1rem;
+text-align: center;
+user-select: none;
+}
+/* Sponsored badge */
+.card .sponsored {
+position: absolute;
+top: 12px;
+right: 12px;
+background: var(--sponsor-bg);
+color: var(--sponsor-text);
+font-weight: 700;
+font-size: 0.75rem;
+padding: 0.25rem 0.5rem;
+border-radius: 8px;
+user-select: none;
+pointer-events: none;
+}
+
+/* Expanded card details */
+.card.expanded {
+grid-column: 1 / -1;
+max-width: 100%;
+cursor: default;
+}
+.card.expanded img {
+height: 260px;
+}
+.card.expanded .details {
+padding: 1rem 1.5rem 1.8rem;
+color: var(--text-color);
+font-size: 1rem;
+line-height: 1.4;
+}
+.card.expanded .details h3 {
+margin-top: 0;
+margin-bottom: 0.4rem;
+font-size: 2rem;
+color: var(--bg-color);
+}
+.card.expanded .details p {
+margin-bottom: 0.9rem;
+}
+.card.expanded .details .address {
+font-weight: 700;
+margin-bottom: 0.8rem;
+color: #444;
+}
+.card.expanded .details .comments {
+font-style: italic;
+font-size: 0.9rem;
+margin-top: 1rem;
+max-height: 120px;
+overflow-y: auto;
+padding-right: 0.5rem;
+border-top: 1px solid #ddd;
+color: #555;
+}
+.card.expanded .details .comments p {
+margin-bottom: 0.5rem;
+}
+.card.expanded .details button {
+background: var(--primary-color);
+color: var(--light);
+border: none;
+padding: 0.7rem 1.3rem;
+border-radius: 12px;
+font-weight: 700;
+font-size: 1rem;
+cursor: pointer;
+box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+transition: background 0.3s ease;
+}
+.card.expanded .details button:hover {
+background: #00baff;
+}
+
+/* ==== Live Events section ==== */
+#live-events {
+margin-top: 3rem;
+max-width: 960px;
+margin-left: auto;
+margin-right: auto;
+background: var(--light);
+border-radius: 15px;
+padding: 1.5rem 1.8rem;
+box-shadow: 0 4px 12px var(--card-shadow);
+}
+#live-events h2 {
+color: var(--bg-color);
+font-size: 2rem;
+margin-bottom: 1rem;
+text-align: center;
+}
+.event-list {
+display: flex;
+flex-wrap: wrap;
+gap: 1rem;
+justify-content: center;
+}
+.event-card {
+background: #fafafa;
+border-radius: 12px;
+padding: 1rem;
+flex: 1 1 280px;
+box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+}
+.event-card h3 {
+margin-bottom: 0.5rem;
+color: var(--primary-color);
+}
+.event-card p {
+font-size: 0.9rem;
+color: #333;
+}
+
+/* ==== Assistant (Savie) ==== */
+#assistant-container {
+position: fixed;
+bottom: 20px;
+right: 20px;
+width: 88px;
+height: 88px;
+z-index: 10000;
+font-family: 'Fredoka One', cursive;
+}
+#assistant-button {
+width: 88px;
+height: 88px;
+background: var(--primary-color);
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+cursor: pointer;
+box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+animation: float 3s ease-in-out infinite;
+user-select: none;
+font-size: 3.2rem;
+color: var(--light);
+transition: background 0.3s ease;
+border: none;
+}
+#assistant-button:hover {
+background: #00baff;
+}
+#assistant-panel {
+position: fixed;
+bottom: 120px;
+right: 20px;
+width: 320px;
+max-height: 480px;
+background: var(--light);
+border-radius: 18px;
+box-shadow: 0 8px 28px rgba(0,0,0,0.4);
+display: none;
+flex-direction: column;
+overflow: hidden;
+user-select: text;
+}
+#assistant-header {
+background: var(--primary-color);
+color: var(--light);
+padding: 0.9rem 1rem;
+font-weight: 700;
+font-size: 1.3rem;
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+#assistant-close {
+cursor: pointer;
+font-weight: 900;
+font-size: 1.6rem;
+user-select: none;
+}
+#assistant-messages {
+flex: 1;
+padding: 1rem;
+overflow-y: auto;
+font-size: 0.9rem;
+color: var(--text-color);
+}
+.message {
+margin-bottom: 1rem;
+line-height: 1.3;
+}
+.message.bot {
+color: var(--primary-color);
+}
+.message.user {
+text-align: right;
+color: var(--accent-color);
+font-weight: 700;
+}
+#assistant-input-container {
+padding: 0.6rem 1rem;
+border-top: 1px solid #ddd;
+background: #f7f7f7;
+display: flex;
+}
+#assistant-input {
+flex: 1;
+padding: 0.6rem 0.8rem;
+border-radius: 12px;
+border: 2px solid var(--primary-color);
+font-family: 'Fredoka One', cursive;
+font-size: 1rem;
+outline-offset: 2px;
+outline-color: var(--primary-color);
+}
+#assistant-send {
+background: var(--primary-color);
+border: none;
+color: var(--light);
+font-weight: 700;
+font-size: 1rem;
+border-radius: 12px;
+margin-left: 0.7rem;
+padding: 0 1.3rem;
+cursor: pointer;
+transition: background 0.3s ease;
+}
+#assistant-send:hover {
+background: #00baff;
+}
+/* Floating animation */
+@keyframes float {
+0%, 100% { transform: translateY(0); }
+50% { transform: translateY(-8px); }
+}
+
+/* ==== Responsive ==== */
+@media (max-width: 480px) {
+#assistant-panel {
+width: 90vw;
+bottom: 110px;
+right: 5vw;
+max-height: 60vh;
+}
+#activities-container {
+grid-template-columns: 1fr;
+}
+}
+</style>
+</head>
+<body>
+
+<!-- Splash Screen -->
+<div id="splash" aria-label="Loading WaySave app">
+<img src="https://i.imgur.com/F3pmcEX.png" alt="WaySave Logo" />
+<h1>WaySave</h1>
+<p>Your NYC Activity Finder</p>
+</div>
+
+<!-- Header -->
+<header>
+<h1>WaySave</h1>
+</header>
+
+<!-- Banner Ad -->
+<div class="banner-ad" aria-live="polite" role="region" aria-label="Sponsored Advertisement">
+🚨 Sponsored: Try the new “BounceZone” Trampoline Park in Queens!
+</div>
+
+<!-- Survey Container -->
+<section id="survey-container" aria-label="User Information Survey">
+<h2>Tell Us About You</h2>
+<form id="survey-form">
+<div class="survey-group">
+<label for="name-input">Your Name</label>
+<input type="text" id="name-input" name="name" placeholder="Enter your first name" required autocomplete="name" />
+</div>
+<div class="survey-group">
+<label for="age-select">Select Your Age Group</label>
+<select id="age-select" name="ageGroup" required>
+<option value="" disabled selected>Select age group</option>
+<option value="teen">13-17</option>
+<option value="youngadult">18-25</option>
+<option value="adult">26-40</option>
+<option value="senior">40+</option>
+</select>
+</div>
+<div class="survey-group">
+<label for="borough-select">Select Your Borough</label>
+<select id="borough-select" name="borough" required>
+<option value="" disabled selected>Select borough</option>
+<option value="brooklyn">Brooklyn</option>
+<option value="queens">Queens</option>
+<option value="manhattan">Manhattan</option>
+<option value="bronx">Bronx</option>
+<option value="statenisland">Staten Island</option>
+</select>
+</div>
+<div class="survey-group">
+<label>Select Your Interests</label>
+<div class="checkboxes" role="group" aria-label="Interests selection">
+<label><input type="checkbox" name="interests" value="music" /> Music</label>
+<label><input type="checkbox" name="interests" value="food" /> Food</label>
+<label><input type="checkbox" name="interests" value="art" /> Art</label>
+<label><input type="checkbox" name="interests" value="nature" /> Nature</
